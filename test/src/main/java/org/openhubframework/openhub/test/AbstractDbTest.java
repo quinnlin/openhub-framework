@@ -24,6 +24,7 @@ import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.After;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,14 @@ public abstract class AbstractDbTest extends AbstractTest {
     private DataSource dataSource;
 
     private JdbcTemplate jdbcTemplate;
+
+    /**
+     * Clean up after each test.
+     */
+    @After
+    public void cleanUp() {
+        getJdbcTemplate().execute("DROP ALL OBJECTS");
+    }
 
     /**
      * Gets {@link JdbcTemplate} for test DB.
